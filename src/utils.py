@@ -74,8 +74,8 @@ def get_all_election_data():
     10 - College
     """
 
-    general_data_url = "https://www.guildofstudents.com/svc/voting/stats/election/paramstats/189?groupIds=1,6,7,8,9,10&sortBy=itemname&sortDirection=ascending"
-    soc_data_url = "https://www.guildofstudents.com/svc/voting/stats/election/membershipstats/189?groupIds=1,2,3,4,5,6,7,8,9,10&sortBy=itemname&sortDirection=ascending"
+    general_data_url = "https://www.guildofstudents.com/svc/voting/stats/election/paramstats/354?groupIds=1,6,7,8,9,10&sortBy=itemname&sortDirection=ascending"
+    soc_data_url = "https://www.guildofstudents.com/svc/voting/stats/election/membershipstats/354?groupIds=1,2,3,4,5,6,7,8,9,10&sortBy=itemname&sortDirection=ascending"
 
     general_data = get_data(general_data_url)
     soc_data = get_data(soc_data_url)
