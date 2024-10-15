@@ -31,10 +31,10 @@ def get_data(url):
     return requests.get(url).json()
 
 
-def get_generated_date(data):
+def get_generated_date(data) -> str:
     print(data)
 
-    guild_dt = data["DateGenerated"]
+    guild_dt: str = data["DateGenerated"]
 
     guild_dt = guild_dt[:19]
 
@@ -43,8 +43,9 @@ def get_generated_date(data):
     return guild_dt
 
 
-def convert_generated_dt_to_object(generated_dt):
+def convert_generated_dt_to_object(generated_dt) -> datetime:
     return datetime.strptime(generated_dt, "%Y-%m-%dT%H%M%S")
+
 
 def combine_json_data(general_data, soc_data):
     # because MSL is fucking STUPID

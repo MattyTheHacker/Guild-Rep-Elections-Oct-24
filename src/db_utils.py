@@ -4,47 +4,49 @@ import sys
 import os
 
 def put_specific_data_into_db(dataset, table_name, date_generated, cur, conn):
-    cur.execute("SELECT name FROM " + table_name)
-    deps_in_db = [dep[0] for dep in cur.fetchall()]
+    try:
+        cur.execute("SELECT name FROM " + table_name)
+        deps_in_db = [dep[0] for dep in cur.fetchall()]
 
-    deps = {}
-    for dep in dataset["Items"]:
-        deps[dep["Name"]] = (dep["Voters"], dep["Eligible"])
-    
-    cur.execute("SELECT * FROM " + table_name)
+        deps = {}
+        for dep in dataset["Items"]:
+            deps[dep["Name"]] = (dep["Voters"], dep["Eligible"])
+        
+        cur.execute("SELECT * FROM " + table_name)
 
-    column_command = "ALTER TABLE " + table_name + " ADD COLUMN '" + date_generated + "' INTEGER"
-    cur.execute(column_command)
-    conn.commit()
+        column_command = "ALTER TABLE " + table_name + " ADD COLUMN '" + date_generated + "' INTEGER"
+        cur.execute(column_command)
+        conn.commit()
 
-    for dep in deps:
-        if dep not in deps_in_db:
-            print("[INFO] Inserting " + dep + " into database...")
-            row_command = "INSERT INTO " + table_name + " (name, eligible) VALUES ('" + dep + "', " + str(deps[dep][1]) + ")"
-            input_data_command = "UPDATE " + table_name + " SET '" + date_generated + "' = " + str(deps[dep][0]) + " WHERE name = '" + dep + "'"
-            try:
-                cur.execute(row_command)
-                cur.execute(input_data_command)
-                conn.commit()
-            except sqlite3.Error as er:
-                print('SQLite error: %s' % (' '.join(er.args)))
-                print("Exception class is: ", er.__class__)
-                print('SQLite traceback: ')
-                exc_type, exc_value, exc_tb = sys.exc_info()
-                print(traceback.format_exception(exc_type, exc_value, exc_tb))
-        else:
-            print("[INFO] Updating " + dep + " in database...")
-            input_data_command = "UPDATE " + table_name + " SET '" + date_generated + "' = " + str(deps[dep][0]) + " WHERE name = '" + dep + "'"
-            try:
-                cur.execute(input_data_command)
-                conn.commit()
-            except sqlite3.Error as er:
-                print('SQLite error: %s' % (' '.join(er.args)))
-                print("Exception class is: ", er.__class__)
-                print('SQLite traceback: ')
-                exc_type, exc_value, exc_tb = sys.exc_info()
-                print(traceback.format_exception(exc_type, exc_value, exc_tb))
-
+        for dep in deps:
+            if dep not in deps_in_db:
+                print("[INFO] Inserting " + dep + " into database...")
+                row_command = "INSERT INTO " + table_name + " (name, eligible) VALUES ('" + dep + "', " + str(deps[dep][1]) + ")"
+                input_data_command = "UPDATE " + table_name + " SET '" + date_generated + "' = " + str(deps[dep][0]) + " WHERE name = '" + dep + "'"
+                try:
+                    cur.execute(row_command)
+                    cur.execute(input_data_command)
+                    conn.commit()
+                except sqlite3.Error as er:
+                    print('SQLite error: %s' % (' '.join(er.args)))
+                    print("Exception class is: ", er.__class__)
+                    print('SQLite traceback: ')
+                    exc_type, exc_value, exc_tb = sys.exc_info()
+                    print(traceback.format_exception(exc_type, exc_value, exc_tb))
+            else:
+                print("[INFO] Updating " + dep + " in database...")
+                input_data_command = "UPDATE " + table_name + " SET '" + date_generated + "' = " + str(deps[dep][0]) + " WHERE name = '" + dep + "'"
+                try:
+                    cur.execute(input_data_command)
+                    conn.commit()
+                except sqlite3.Error as er:
+                    print('SQLite error: %s' % (' '.join(er.args)))
+                    print("Exception class is: ", er.__class__)
+                    print('SQLite traceback: ')
+                    exc_type, exc_value, exc_tb = sys.exc_info()
+                    print(traceback.format_exception(exc_type, exc_value, exc_tb))
+    except sqlite3.OperationalError:
+        pass
 
 
 def save_to_db(data, date_generated):
