@@ -1,4 +1,4 @@
-from utils import *
+
 import sqlite3
 import sys
 import traceback
@@ -8,8 +8,8 @@ import csv
 
 def get_db_data(table_name):
     db_file_path = "../data/db/all_data.db"
-    conn = sqlite3.connect(db_file_path)
-    cur = conn.cursor()
+    conn: sqlite3.Connection = sqlite3.connect(db_file_path)
+    cur: sqlite3.Cursor = conn.cursor()
 
     command = "SELECT * FROM " + table_name
 
@@ -31,7 +31,7 @@ def get_db_data(table_name):
     return data
 
 
-def save_final_count_as_csv(data, filename):
+def save_final_count_as_csv(data, filename) -> None:
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['Name', 'Eligible', 'Voters'])
@@ -45,14 +45,15 @@ def save_all_data_as_csv(data, filename):
         writer.writerow()
 
 
-
 if __name__ == '__main__':
     dep_data = get_db_data('department_data')
     sex_data = get_db_data('sex_data')
     year_data = get_db_data('year_data')
     type_data = get_db_data('type_data')
+    society_data = get_db_data('societies_data')
 
     save_final_count_as_csv(dep_data, '../data/csv/department_final_votes.csv')
     save_final_count_as_csv(sex_data, '../data/csv/sex_final_votes.csv')
     save_final_count_as_csv(year_data, '../data/csv/year_final_votes.csv')
     save_final_count_as_csv(type_data, '../data/csv/type_final_votes.csv')
+    save_final_count_as_csv(society_data, '../data/csv/society_final_votes.csv')

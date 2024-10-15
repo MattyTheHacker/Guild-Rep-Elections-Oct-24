@@ -13,13 +13,15 @@ def get_all_data_file_names(path) -> list[str]:
     """
     return [filename for filename in os.listdir(path) if filename.endswith(".json")]
 
-def save_json_data(data, filename):
+def save_json_data(data, filename) -> None:
     with open(filename, 'x') as file:
         json.dump(data, file, indent=4)
+
 
 def load_json_data(filename):
     with open(filename, 'r') as file:
         return json.load(file)
+
 
 def get_data(url):
     """
@@ -58,8 +60,7 @@ def combine_json_data(general_data, soc_data):
     return general_data
 
 
-
-def get_all_election_data():
+def get_all_election_data() -> None:
 
     """
     IDs:
@@ -81,7 +82,7 @@ def get_all_election_data():
     general_data = get_data(general_data_url)
     soc_data = get_data(soc_data_url)
 
-    date_generated = get_generated_date(general_data)
+    date_generated: str = get_generated_date(general_data)
 
     all_data = combine_json_data(general_data, soc_data)
 

@@ -1,9 +1,10 @@
-from utils import *
-from db_utils import *
+from utils import get_all_election_data, get_all_data_file_names, get_generated_date, load_json_data
+from db_utils import save_to_db
+from datetime import datetime
 
 get_all_election_data()
 
-files = get_all_data_file_names('../data/json/raw/')
+files: list[str] = get_all_data_file_names('../data/json/raw/')
 
 # files names are in the format: YYYY-MM-DDTHH-MM-SS.json
 # we want to sort by date, so we need to extract the date from the file name

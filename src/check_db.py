@@ -1,16 +1,16 @@
 import sqlite3
 
 # open db 
-conn = sqlite3.connect('../data/db/all_data.db')
+conn: sqlite3.Connection = sqlite3.connect('../data/db/all_data.db')
 
 # get cursor
-cur = conn.cursor()
+cur: sqlite3.Cursor = conn.cursor()
 
 # get all tables
 cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
 
 # print all tables
-tables = [table[0] for table in cur.fetchall()]
+tables: list[str] = [table[0] for table in cur.fetchall()]
 
 cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
 
