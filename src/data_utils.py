@@ -52,8 +52,8 @@ if __name__ == '__main__':
     type_data = get_db_data('type_data')
     society_data = get_db_data('societies_data')
 
-    save_final_count_as_csv(dep_data, '../data/csv/department_final_votes.csv')
-    save_final_count_as_csv(sex_data, '../data/csv/sex_final_votes.csv')
-    save_final_count_as_csv(year_data, '../data/csv/year_final_votes.csv')
-    save_final_count_as_csv(type_data, '../data/csv/type_final_votes.csv')
-    save_final_count_as_csv(society_data, '../data/csv/society_final_votes.csv')
+    save_final_count_as_csv(dep_data, '../data/csv/finals/department_final_votes.csv')
+    save_final_count_as_csv(sex_data, '../data/csv/finals/sex_final_votes.csv')
+    save_final_count_as_csv(year_data, '../data/csv/finals/year_final_votes.csv')
+    save_final_count_as_csv(type_data, '../data/csv/finals/type_final_votes.csv')
+    save_final_count_as_csv(society_data, '../data/csv/finals/society_final_votes.csv')
