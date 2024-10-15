@@ -6,7 +6,7 @@ import os
 
 
 
-def get_all_data_file_names(path):
+def get_all_data_file_names(path) -> list[str]:
     """
     Get all the data file names in the data directory.
     :return: a list of file names.
