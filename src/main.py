@@ -1,6 +1,11 @@
 from utils import get_all_election_data, get_all_data_file_names, get_generated_date, load_json_data
 from db_utils import save_to_db
 from datetime import datetime
+import sys
+
+print("The election is over! No data left to scrape...")
+
+sys.exit(1)
 
 get_all_election_data()
 
